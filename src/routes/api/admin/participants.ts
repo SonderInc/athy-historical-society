@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { db } from "../../../../db/index.js";
 import { participants } from "../../../../db/schema.js";
-import { asc } from "drizzle-orm";
+import { desc } from "drizzle-orm";
 
 function checkAdminSession(request: Request): boolean {
   const cookie = request.headers.get("cookie") || "";
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/api/admin/participants")({
         const rows = await db
           .select()
           .from(participants)
-          .orderBy(asc(participants.createdAt));
+          .orderBy(desc(participants.createdAt));
 
         return Response.json(rows);
       },
