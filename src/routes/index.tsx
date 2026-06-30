@@ -29,6 +29,11 @@ function HomePage() {
 
   useEffect(() => {
     if (verified === "success" || verified === "already" || verified === "invalid") {
+      // Refresh participants list after email verification
+      fetch("/api/participants")
+        .then((r) => r.json())
+        .then((data) => setParticipants(Array.isArray(data) ? data : []))
+        .catch(() => {});
       setTimeout(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 300);
     }
   }, [verified]);
@@ -251,35 +256,8 @@ function HomePage() {
           <div className="h-px flex-1 bg-[#c8a96e] opacity-50" />
         </div>
 
-        {/* Participants list */}
-        <section ref={formRef as React.RefObject<HTMLDivElement>} className="mb-14">
-          <h2 className="text-xl font-bold text-[#2e3d1f] mb-2" style={{ fontFamily: "Georgia, serif" }}>
-            Interested Participants
-          </h2>
-          <p className="text-sm text-[#7a6b4e] mb-6">
-            The following individuals have expressed interest in the establishment of the Athy Historical Society.
-          </p>
-
-          {participants.length === 0 ? (
-            <div className="bg-white border border-[#ddd0b8] rounded-sm p-6 text-center text-[#9a8a6a] italic text-sm">
-              No participants yet. Be the first to add your name to the list.
-            </div>
-          ) : (
-            <div className="bg-white border border-[#ddd0b8] rounded-sm">
-              <ul className="divide-y divide-[#f0e8d5]">
-                {participants.map((n, i) => (
-                  <li key={i} className="px-6 py-3 flex items-center gap-3 text-[#3a3a3a]">
-                    <span className="text-[#c8a96e] text-xs font-mono w-6 text-right flex-shrink-0">{i + 1}.</span>
-                    <span>{n}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </section>
-
         {/* Sign-up form */}
-        <section className="mb-12">
+        <section ref={formRef as React.RefObject<HTMLDivElement>} className="mb-12">
           <div className="bg-[#f0e8d5] border border-[#ddd0b8] rounded-sm p-8">
             <h2 className="text-xl font-bold text-[#2e3d1f] mb-1" style={{ fontFamily: "Georgia, serif" }}>
               Express Your Interest
@@ -344,6 +322,33 @@ function HomePage() {
               </form>
             )}
           </div>
+        </section>
+
+        {/* Participants list */}
+        <section className="mb-14">
+          <h2 className="text-xl font-bold text-[#2e3d1f] mb-2" style={{ fontFamily: "Georgia, serif" }}>
+            Interested Participants
+          </h2>
+          <p className="text-sm text-[#7a6b4e] mb-6">
+            The following individuals have expressed interest in the establishment of the Athy Historical Society.
+          </p>
+
+          {participants.length === 0 ? (
+            <div className="bg-white border border-[#ddd0b8] rounded-sm p-6 text-center text-[#9a8a6a] italic text-sm">
+              No participants yet. Be the first to add your name to the list.
+            </div>
+          ) : (
+            <div className="bg-white border border-[#ddd0b8] rounded-sm">
+              <ul className="divide-y divide-[#f0e8d5]">
+                {participants.map((n, i) => (
+                  <li key={i} className="px-6 py-3 flex items-center gap-3 text-[#3a3a3a]">
+                    <span className="text-[#c8a96e] text-xs font-mono w-6 text-right flex-shrink-0">{i + 1}.</span>
+                    <span>{n}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </section>
       </main>
 
