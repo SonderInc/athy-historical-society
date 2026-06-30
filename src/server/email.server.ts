@@ -66,7 +66,7 @@ export async function sendVerificationEmail(
 ) {
   const config = getSmtpConfig();
   const { fromEmail, siteUrl } = config;
-  const verifyUrl = `${siteUrl}/verify?token=${token}`;
+  const verifyUrl = `${siteUrl}/api/verify?token=${token}`;
 
   const transport = getTransport(config);
 
