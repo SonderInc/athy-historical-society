@@ -356,6 +356,11 @@ function HomePage() {
       <footer className="bg-[#2e3d1f] text-[#a8b898] text-center py-6 text-xs">
         <p>© {new Date().getFullYear()} Athy Historical Society. All rights reserved.</p>
         <p className="mt-1 text-[#7a8a6a]">athyheritagesociety.com</p>
+        <p className="mt-2">
+          <a href="/admin/login" className="text-[#7a8a6a] hover:text-[#a8b898] underline">
+            Admin
+          </a>
+        </p>
       </footer>
     </div>
   );
